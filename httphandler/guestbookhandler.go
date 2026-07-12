@@ -21,30 +21,26 @@ func (h *GuestbookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		offset, err := strconv.Atoi(offsetQ)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte("Bad Request"))
+			http.Error(w, "Bad Request: invalid offset", http.StatusBadRequest)
 			return
 		}
 		limit, err := strconv.Atoi(limitQ)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte("Bad Request"))
+			http.Error(w, "Bad Request: invalid limit", http.StatusBadRequest)
 			return
 		}
 
 		guestbook, err := sqldb.GetGuestbook(offset, limit)
 
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("Internal Server Error"))
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 
 		pbytes, err := json.Marshal(guestbook)
 
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("Internal Server Error"))
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 
