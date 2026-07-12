@@ -1,4 +1,4 @@
-module github.com/juhonamnam/wedding-invitation-server
+module hjs-wedding-server
 
 go 1.18
 

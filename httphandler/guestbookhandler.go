@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/juhonamnam/wedding-invitation-server/sqldb"
-	"github.com/juhonamnam/wedding-invitation-server/types"
+	"hjs-wedding-server/sqldb"
+	"hjs-wedding-server/types"
 )
 
 type GuestbookHandler struct {

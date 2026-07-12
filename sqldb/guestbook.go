@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/juhonamnam/wedding-invitation-server/env"
-	"github.com/juhonamnam/wedding-invitation-server/types"
-	"github.com/juhonamnam/wedding-invitation-server/util"
+	"hjs-wedding-server/env"
+	"hjs-wedding-server/types"
+	"hjs-wedding-server/util"
 )
 
 func initializeGuestbookTable() error {

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/juhonamnam/wedding-invitation-server/sqldb"
-	"github.com/juhonamnam/wedding-invitation-server/types"
+	"hjs-wedding-server/sqldb"
+	"hjs-wedding-server/types"
 )
 
 type AttendanceHandler struct {

@@ -1,3 +1,4 @@
 *.db
 .env
 wedding-invitation-server
+recovery-codes.txt
