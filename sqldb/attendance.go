@@ -22,7 +22,7 @@ func initializeAttendanceTable() error {
 func CreateAttendance(side, name, meal string, count int) error {
 	_, err := sqlDb.Exec(`
 		INSERT INTO attendance (side, name, meal, count, timestamp)
-		VALUES (?, ?, ?, ?, ?)
+		VALUES ($1, $2, $3, $4, $5)
 	`, side, name, meal, count, time.Now().Unix())
 	if err != nil {
 		fmt.Println(err)

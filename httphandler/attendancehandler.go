@@ -18,28 +18,19 @@ func (h *AttendanceHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		var attendance types.AttendanceCreate
 		err := decoder.Decode(&attendance)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte("BadRequest"))
-			return
-		}
-
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("InternalServerError"))
+			http.Error(w, "Bad Request", http.StatusBadRequest)
 			return
 		}
 
 		err = sqldb.CreateAttendance(attendance.Side, attendance.Name, attendance.Meal, attendance.Count)
 
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("InternalServerError"))
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 
 		w.Header().Set("Content-Type", "application/json")
 	} else {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		w.Write([]byte("Method Not Allowed"))
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
 	}
 }

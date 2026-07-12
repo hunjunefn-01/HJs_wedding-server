@@ -55,22 +55,15 @@ func (h *GuestbookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		var post types.GuestbookPostForCreate
 		err := decoder.Decode(&post)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte("BadRequest"))
-			return
-		}
-
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("InternalServerError"))
+			http.Error(w, "Bad Request", http.StatusBadRequest)
 			return
 		}
 
 		err = sqldb.CreateGuestbookPost(post.Name, post.Content, post.Password)
 
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("InternalServerError"))
+			// 실제 운영 환경에서는 에러를 로깅하는 것이 좋습니다.
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 
@@ -80,27 +73,22 @@ func (h *GuestbookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		var post types.GuestbookPostForDelete
 		err := decoder.Decode(&post)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte("BadRequest"))
+			http.Error(w, "Bad Request", http.StatusBadRequest)
 			return
 		}
 
 		err = sqldb.DeleteGuestbookPost(post.Id, post.Password)
-
 		if err != nil {
 			if err.Error() == "INCORRECT_PASSWORD" {
-				w.WriteHeader(http.StatusForbidden)
-				w.Write([]byte("Forbidden"))
+				http.Error(w, "Forbidden: incorrect password", http.StatusForbidden)
 			} else {
-				w.WriteHeader(http.StatusInternalServerError)
-				w.Write([]byte("InternalServerError"))
+				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			}
 			return
 		}
 
 		w.Header().Set("Content-Type", "application/json")
 	} else {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		w.Write([]byte("Method Not Allowed"))
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
 	}
 }
