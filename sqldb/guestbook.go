@@ -1,6 +1,7 @@
 package sqldb
 
 import (
+	"database/sql"
 	"fmt"
 	"time"
 
