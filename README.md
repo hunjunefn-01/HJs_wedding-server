@@ -4,7 +4,7 @@
 
 ## 사전 요구사항
 
-- Go 1.18
+- Python 3.10+
 
 ## 제공 기능
 
@@ -15,48 +15,31 @@
 
 ## 시작하기
 
-1. 저장소 복제:
+1. 가상환경 생성 및 활성화:
 
    ```bash
-   git clone https://github.com/juhonamnam/wedding-invitation-server.git
-   cd wedding-invitation-server
+   python -m venv .venv
+   .venv\Scripts\activate  # Windows
+   source .venv/bin/activate  # macOS/Linux
    ```
 
 2. 의존성 설치:
 
    ```bash
-   go mod download
+   pip install -r requirements.txt
    ```
 
-3. 환경변수 설정:
-
-   환경변수 샘플은 `.env.example` 파일에 저장되어 있습니다. 이 파일을 복사하여 `.env` 파일을 생성하고 각 환경변수를 수정합니다.
-
-   ```bash
-   cp .env.example .env
-   ```
+3. 환경변수 설정 (`.env` 파일 생성):
 
    - `ALLOW_ORIGIN`
-     - 허용할 도메인
+     - 허용할 도메인 (예: `http://localhost:3000`)
    - `ADMIN_PASSWORD`
      - 관리자 전용 비밀번호
      - 방명록 강제 삭제를 원하는 경우 해당 비밀번호로 삭제 가능
 
 4. 서버 실행:
    ```bash
-   go run app.go
+   python app.py
    ```
 
-   서버가 기본적으로 `http://localhost:8080`에서 실행됩니다.
-
-## 배포하기
-
-1. 프로젝트 빌드:
-   ```bash
-   go build
-   ```
-
-2. 빌드된 바이너리 실행:
-   ```bash
-   ./wedding-invitation-server
-   ```
+   서버가 기본적으로 `http://localhost:8080`에서 실행됩니다. 첫 실행 시 `sql.db` (SQLite) 파일과 테이블이 자동으로 생성됩니다.

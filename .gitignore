@@ -2,3 +2,7 @@
 .env
 wedding-invitation-server
 recovery-codes.txt
+
+__pycache__/
+*.pyc
+.venv/
