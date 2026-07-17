@@ -1,9 +1,12 @@
+import os
 import sqlite3
 
 _db: sqlite3.Connection | None = None
 
+_DEFAULT_DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sql.db")
 
-def init_db(path: str = "./sql.db") -> None:
+
+def init_db(path: str = _DEFAULT_DB_PATH) -> None:
     global _db
     _db = sqlite3.connect(path, check_same_thread=False)
 
